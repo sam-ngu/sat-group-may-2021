@@ -1,0 +1,11 @@
+.d-hide{
+    display: none;
+}
+
+.choice-selection{
+    cursor: pointer;
+}
+
+.choice-selection:hover{
+    box-shadow: 5px  2px 15px rgb(216, 216, 216);
+}

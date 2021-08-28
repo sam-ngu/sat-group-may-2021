@@ -1,0 +1,14 @@
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+
+        {{#if session.logged_in}}
+            <li><a href="/api/logout">Logout</a></li>
+        {{/if}}
+
+        {{#unless session.logged_in}}
+            <li><a href="/login">Login</a></li>
+        {{/unless}}
+    </ul>
+
+</nav>

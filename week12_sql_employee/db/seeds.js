@@ -1,6 +1,9 @@
 const mysql = require('mysql2');
+const faker = require('faker');
 
 const createConnection = require('./../config/db');
+const { createDepartment, getDepartments } = require('../utils/department');
+const { createRole } = require('../utils/role');
 
 async function dropAllTables(){
 
@@ -72,6 +75,45 @@ async function createEmployeeTable(){
 
 }
 
+async function seedDepartments(num = 3){
+
+    for (let index = 0; index < num; index++) {
+
+        const departmentName = faker.commerce.department();
+
+        // insert this dept into the table
+        await createDepartment(departmentName)
+        
+    }
+    
+}
+
+async function seedRoles(num = 5){
+
+    const departments = await getDepartments();
+
+    for (let index = 0; index < num; index++) {
+        const title = faker.animal.crocodilia();
+        const salary = Math.floor(Math.random() * 1000)
+        
+        // random department 
+
+
+        // 1. get all the dept as an array
+        // randomly get one element
+        // retrieve the id
+        const department_id = departments[Math.floor(Math.random() * departments.length)].id
+
+
+        await createRole(title, salary, department_id);
+
+
+    }
+
+}
+
+
+
 async function main(){
     // drop all the tables
     await dropAllTables();
@@ -88,6 +130,9 @@ async function main(){
 
 
     // generate fake data  -- faker
+    await seedDepartments(3);
+    await seedRoles(5);
+
 }
 
 

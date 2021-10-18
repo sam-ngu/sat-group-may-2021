@@ -35,8 +35,8 @@ const API = {
     return json;
   },
 
-  async getWorkoutsInRange() {
-    const res = await fetch(`/api/workouts/range`);
+  async getWorkoutsInRange(numberOfItems=7) {
+    const res = await fetch(`/api/workouts?size=${numberOfItems}`);
     const json = await res.json();
 
     return json;

@@ -1,9 +1,9 @@
-const createConnection = require("./../config/db");
+const {createConnection, TABLE} = require("./../config/db");
 
 // create
 async function createDepartment(name) {
     const query =
-        "INSERT INTO `employee_db_new`.`departments` (`name`) VALUES ('" +
+        "INSERT INTO `" + TABLE + "`.`departments` (`name`) VALUES ('" +
         name +
         "');";
     const connection = await createConnection();
@@ -14,7 +14,7 @@ async function createDepartment(name) {
 // read
 async function getDepartments(limit = 1000) {
 
-    const query = "SELECT * FROM employee_db_new.departments limit " + limit + ";";
+    const query = "SELECT * FROM " + TABLE + ".departments limit " + limit + ";";
 
     const connection = await createConnection();
 
@@ -29,7 +29,7 @@ async function getDepartments(limit = 1000) {
 
 function updateDepartment(id, payload) {
 
-    // UPDATE `employee_db_new`.`departments` SET `name` = 'finance123' WHERE (`id` = '1');
+    // UPDATE `" + TABLE + "`.`departments` SET `name` = 'finance123' WHERE (`id` = '1');
 
 
 

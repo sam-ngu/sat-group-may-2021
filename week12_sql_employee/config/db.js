@@ -2,13 +2,19 @@ const mysql = require("mysql2/promise");
 
 // create the connection to database
 
+const TABLE = "employee_db_new";
+
+
 function createConnection() {
     return mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "root",
-        database: "employee_db_new",
+        database: TABLE,
     });
 }
 
-module.exports = createConnection;
+module.exports = {
+    createConnection,
+    TABLE,
+};

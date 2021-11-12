@@ -1,9 +1,9 @@
-const createConnection = require("./../config/db");
+const {createConnection, TABLE} = require("./../config/db");
 
 // create
 async function createRole(title, salary, department_id) {
     const query =
-        "INSERT INTO `employee_db_new`.`roles` (`title`, `salary`, `department_id`) VALUES ('" +
+        "INSERT INTO `" + TABLE + "`.`roles` (`title`, `salary`, `department_id`) VALUES ('" +
         title +
         "', '" +
         salary +
@@ -17,7 +17,14 @@ async function createRole(title, salary, department_id) {
 }
 
 // read
-function getRoles() {}
+async function getRoles() {
+
+    const query = "SELECT * FROM " + TABLE +".roles;";
+    const connection = await createConnection();
+    const response = await connection.execute(query);
+    return response[0];
+
+}
 
 // update
 // updateRole({
@@ -25,7 +32,7 @@ function getRoles() {}
 // })
 
 function updateRole(id, payload) {
-    // UPDATE `employee_db_new`.`Roles` SET `name` = 'finance123' WHERE (`id` = '1');
+    // UPDATE `" + TABLE + "`.`Roles` SET `name` = 'finance123' WHERE (`id` = '1');
 }
 
 // delete

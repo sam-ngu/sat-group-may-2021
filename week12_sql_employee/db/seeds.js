@@ -1,9 +1,11 @@
 const mysql = require('mysql2');
 const faker = require('faker');
 
-const createConnection = require('./../config/db');
+const {createConnection} = require('./../config/db');
 const { createDepartment, getDepartments } = require('../utils/department');
-const { createRole } = require('../utils/role');
+const { createRole, getRoles } = require('../utils/role');
+const { createEmployee, getManagers } = require('../utils/employee');
+
 
 async function dropAllTables(){
 
@@ -112,6 +114,40 @@ async function seedRoles(num = 5){
 
 }
 
+async function seedEmployees(num = 30){
+
+    // get all the roles
+
+    const roles = await getRoles();
+
+    console.log({roles})
+
+    // 10% manager
+    // 0 - 1
+    //  < 0.1
+
+
+    for (let index = 0; index < num; index++) {
+        // generate a fake user
+        const firstName = faker.name.firstName();
+        const lastName = faker.name.lastName();
+        const role_id = roles[Math.floor(Math.random() * roles.length)].id;
+
+        const isManager = Math.random() < 0.1;
+
+        let manager_id = null;
+
+        if (!isManager) {
+            const managers = await getManagers();
+            manager_id =
+                managers[Math.floor(Math.random() * managers.length)].id;
+        }
+
+        // run sql query
+        await createEmployee(firstName, lastName, role_id, manager_id);
+    }
+}
+
 
 
 async function main(){
@@ -132,6 +168,11 @@ async function main(){
     // generate fake data  -- faker
     await seedDepartments(3);
     await seedRoles(5);
+
+    await seedEmployees(7);
+
+    console.log("Done!!");
+    process.exit();
 
 }
 
